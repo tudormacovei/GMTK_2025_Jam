@@ -176,7 +176,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a38de798e184b404c9d7ce9b2b68fc77, type: 2}
+  - {fileID: 2100000, guid: 1fff1426fd548e54981b10029ee336bd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -327,14 +327,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 647e6b26191f48d43b44cb88eef77d7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ropeMaterial: {fileID: 2100000, guid: a38de798e184b404c9d7ce9b2b68fc77, type: 2}
   ropeSegmentPrefab: {fileID: 1998350959610465394, guid: b1dc751f2731b2745a0011b92a9f0b84, type: 3}
   segmentSpacing: 0.3
   anchorToDynamicRatio: 4
+  onRopeCompleteExplosionForce: 300
   intersectionThreshold: 0.2
   herdablesLayer:
     serializedVersion: 2
     m_Bits: 64
+  segmentPlacement: {fileID: 8300000, guid: 3c60383e39dc7c5438b4f20dcc7f5bef, type: 3}
+  finishRope: {fileID: 8300000, guid: aa80fbe4a35abdb40b36b667cd3d0e9a, type: 3}
 --- !u!114 &3702930412730848075
 MonoBehaviour:
   m_ObjectHideFlags: 0
