@@ -67,7 +67,7 @@ public class HerdableMovement : MonoBehaviour
 
         if (fencesToAvoid.Count > 0)
         {
-            state = HerdableState.Startled;
+            state = HerdableState.Roaming;
 
             foreach (var position in fencesToAvoid)
             {

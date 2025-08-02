@@ -33,6 +33,7 @@ public class RopeManager : MonoBehaviour
 
     private List<GameObject> ropeSegments = new List<GameObject>();
     private bool isGenerating = false;
+    private bool isCleaningRope = false;
 
     void Start()
     {
@@ -57,13 +58,13 @@ public class RopeManager : MonoBehaviour
     void HandleRopeGenInput()
     {
         // Start new rope on mouse down
-        if ( Input.GetMouseButtonDown( 0 ) )
+        if ( Input.GetMouseButton( 0 ) && !isCleaningRope ) 
         {
             isGenerating = true;
         }
 
         // Stop rope generation on mouse up
-        if ( Input.GetMouseButtonUp( 0 ) )
+        if ( Input.GetMouseButtonUp( 0 ) && !isCleaningRope )
         {
             ClearRope();
         }
@@ -100,6 +101,7 @@ public class RopeManager : MonoBehaviour
 
         SetLineRendererAlpha( 1.0f );
         lineRenderer.positionCount = 0;
+        isCleaningRope = false;
     }
 
     void SpawnSegment()
@@ -206,6 +208,7 @@ public class RopeManager : MonoBehaviour
     void OnRopeLoopComplete()
     {
         isGenerating = false;
+        isCleaningRope = true;
 
         // Create polygon from rope segments
         List<Vector2> polygon = new List<Vector2>();
@@ -230,8 +233,11 @@ public class RopeManager : MonoBehaviour
         StartCoroutine( FadeAndDestroyRopeAndObjects( objToDelete ) );
     }
 
-    IEnumerator FadeAndDestroyRopeAndObjects( List<GameObject> objToDelete, float fadeDuration = 1.0f )
+    IEnumerator FadeAndDestroyRopeAndObjects( List<GameObject> objToDelete, float fadeDuration = 0.6f )
     {
+        // Wait a bit before fading so the force on the rope is visible
+        yield return new WaitForSeconds( 0.6f );
+
         // Fade rope and objects 
         float elapsed = 0f;
         while ( elapsed < fadeDuration )
