@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // Handles rope generation and intersection 
@@ -11,6 +12,7 @@ public class RopeManager : MonoBehaviour
     [SerializeField] private GameObject ropeSegmentPrefab;
     [SerializeField] private float segmentSpacing = 0.3f;
     [SerializeField] private int anchorToDynamicRatio = 4;
+    [SerializeField] private float onRopeCompleteExplosionForce = 300f;
 
     private Vector2 lastSegmentPosition;
     private GameObject lastSegment;
@@ -75,16 +77,18 @@ public class RopeManager : MonoBehaviour
                 SpawnSegment();
                 lastSegmentPosition = transform.position;
             }
-
-            UpdateLineRenderer();
         }
+
+        if (ropeSegments.Count > 0)
+            UpdateLineRenderer();
+
     }
 
     void ClearRope()
     {
         isGenerating = false;
-        lastIntersectionPoint = null;
 
+        lastIntersectionPoint = null;
         lastSegmentPosition = transform.position;
         lastSegment = null;
 
@@ -94,22 +98,26 @@ public class RopeManager : MonoBehaviour
         }
         ropeSegments.Clear();
 
+        SetLineRendererAlpha( 1.0f );
         lineRenderer.positionCount = 0;
     }
 
     void SpawnSegment()
     {
         GameObject newSegment = Instantiate( ropeSegmentPrefab, transform.position, Quaternion.identity );
-        
-        // Make some RBs static so that they anchor the whole rope
-        if ( ropeSegments.Count % anchorToDynamicRatio == 0 )
-            newSegment.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
 
         // Not first segment 
         if (lastSegment != null)
         {
             HingeJoint2D joint = newSegment.GetComponent<HingeJoint2D>();
             joint.connectedBody = lastSegment.GetComponent<Rigidbody2D>();
+            
+            // Always make the last segment static so that it's attached to the Player 
+            newSegment.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+
+            // Make some RBs static so that they anchor the whole rope and some dynamic so the rope has some physics
+            if ( ropeSegments.Count % anchorToDynamicRatio != 0 )
+                lastSegment.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         }
 
         lastSegment = newSegment;
@@ -194,11 +202,60 @@ public class RopeManager : MonoBehaviour
         return objectsInside;
     }
 
-    // Make rope and objects inside it dissapear
+    // Apply force to the rope to simulate it stretching and give visual feedback to the player
     void OnRopeLoopComplete()
     {
+        isGenerating = false;
+
+        // Create polygon from rope segments
+        List<Vector2> polygon = new List<Vector2>();
+        foreach ( GameObject seg in ropeSegments )
+        {
+            polygon.Add( seg.transform.position );
+        }
+        Vector3 center = GetLoopCenter( polygon );
+
+        // Apply a force to each segment RB
+        foreach ( GameObject seg in ropeSegments )
+        {
+            Rigidbody2D rb = seg.GetComponent<Rigidbody2D>();
+            if ( rb != null )
+            {
+                Vector2 explosionDir = ( rb.transform.position - center ).normalized;
+                rb.AddForce( explosionDir * onRopeCompleteExplosionForce );
+            }
+        }
+
         List<GameObject> objToDelete = GetObjectsInsideLoop();
-        foreach (var obj in objToDelete)
+        StartCoroutine( FadeAndDestroyRopeAndObjects( objToDelete ) );
+    }
+
+    IEnumerator FadeAndDestroyRopeAndObjects( List<GameObject> objToDelete, float fadeDuration = 1.0f )
+    {
+        // Fade rope and objects 
+        float elapsed = 0f;
+        while ( elapsed < fadeDuration )
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp( 1f, 0f, elapsed / fadeDuration );
+            SetLineRendererAlpha( alpha );
+            foreach ( var obj in objToDelete )
+            {
+                if ( obj == null )
+                    continue;
+
+                SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
+                if ( sr != null )
+                {
+                    SetSpriteRendererAlpha( sr, alpha );
+                }
+            }
+
+            yield return null;
+        }
+
+        // Destroy the objects after fade is complete 
+        foreach ( var obj in objToDelete )
         {
             Destroy( obj );
         }
@@ -248,6 +305,19 @@ public class RopeManager : MonoBehaviour
             }
         }
         return ( crossings % 2 ) == 1;
+    }
+    void SetLineRendererAlpha( float alpha )
+    {
+        Color c = lineRenderer.material.color;
+        c.a = alpha;
+        lineRenderer.material.color = c;
+    }
+
+    void SetSpriteRendererAlpha( SpriteRenderer sr, float alpha )
+    {
+        Color c = sr.color;
+        c.a = alpha;
+        sr.color = c;
     }
     #endregion
     #endregion
