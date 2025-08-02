@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,6 +30,10 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            return;
+        }
         IsGameRunning = true;
         gameTimer.StartTimer();
 
@@ -50,5 +55,16 @@ public class GameManager : MonoBehaviour
     {
         EndGame();
         StartGame();
+    }
+
+    public void LoadLevel(string LevelName)
+    {
+        SceneManager.LoadScene(LevelName);
+    }
+
+    public void LoadNextLevel()
+    {
+        print("HERE!");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
