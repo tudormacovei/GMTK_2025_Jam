@@ -27,5 +27,6 @@ public class PerspectiveSizing : MonoBehaviour
 
         float scale = Mathf.Lerp(minimumScaleFactor, maximumScaleFactor, alpha);
         GetComponent<Transform>().localScale = initialScale * scale;
+        GetComponent<Transform>().localPosition = new(GetComponent<Transform>().localPosition.x, GetComponent<Transform>().localPosition.y, -scale);
     }
 }
