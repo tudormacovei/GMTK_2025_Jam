@@ -114,4 +114,4 @@ MonoBehaviour:
   m_Name: VHSEffectFeature
   m_EditorClassIdentifier: 
   m_Active: 1
-  material: {fileID: -876546973899608171, guid: b90c9fa0e74247f4ba80719977cc83e4, type: 3}
+  material: {fileID: -876546973899608171, guid: e56c0f7567c72ae4790e12f66d17c5d7, type: 3}
