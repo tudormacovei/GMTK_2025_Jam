@@ -8,10 +8,12 @@ public class PerspectiveSizing : MonoBehaviour
     [SerializeField] private float minimumY;
     [SerializeField] private float maximumY;
 
+    private Vector3 initialScale;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        initialScale = transform.localScale;
     }
 
     // Update is called once per frame
@@ -23,6 +25,6 @@ public class PerspectiveSizing : MonoBehaviour
         float alpha = Mathf.Max(maximumY - yPos, 0) / diff;
 
         float scale = Mathf.Lerp(minimumScaleFactor, maximumScaleFactor, alpha);
-        GetComponent<Transform>().localScale = new Vector3(scale, scale, 1);
+        GetComponent<Transform>().localScale = initialScale * scale;
     }
 }
