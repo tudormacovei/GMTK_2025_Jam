@@ -35,6 +35,10 @@ public class RopeManager : MonoBehaviour
     private bool isGenerating = false;
     private bool isCleaningRope = false;
 
+    public AudioClip segmentPlacement;
+    public AudioClip finishRope;
+
+
     void Start()
     {
         InitRopeGenParams();
@@ -88,7 +92,7 @@ public class RopeManager : MonoBehaviour
     void ClearRope()
     {
         isGenerating = false;
-
+ 
         lastIntersectionPoint = null;
         lastSegmentPosition = transform.position;
         lastSegment = null;
@@ -107,6 +111,7 @@ public class RopeManager : MonoBehaviour
     void SpawnSegment()
     {
         GameObject newSegment = Instantiate( ropeSegmentPrefab, transform.position, Quaternion.identity );
+        AudioManager.Instance.SetSFXVolume(0.5f);
 
         // Not first segment 
         if (lastSegment != null)
@@ -120,6 +125,8 @@ public class RopeManager : MonoBehaviour
             // Make some RBs static so that they anchor the whole rope and some dynamic so the rope has some physics
             if ( ropeSegments.Count % anchorToDynamicRatio != 0 )
                 lastSegment.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            else
+                AudioManager.Instance.PlaySfx(segmentPlacement);
         }
 
         lastSegment = newSegment;
@@ -207,6 +214,10 @@ public class RopeManager : MonoBehaviour
     // Apply force to the rope to simulate it stretching and give visual feedback to the player
     void OnRopeLoopComplete()
     {
+        // Play finish audio, stop any playing audio clip
+        AudioManager.Instance.SetSFXVolume(1.0f);
+        AudioManager.Instance.PlaySfxInterrupt(finishRope);
+
         isGenerating = false;
         isCleaningRope = true;
 
@@ -265,7 +276,7 @@ public class RopeManager : MonoBehaviour
         {
             Destroy( obj );
         }
-
+        
         ClearRope();
     }
 
@@ -325,6 +336,7 @@ public class RopeManager : MonoBehaviour
         c.a = alpha;
         sr.color = c;
     }
+    #endregion
     #endregion
     #endregion
 
