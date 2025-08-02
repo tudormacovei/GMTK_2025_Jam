@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Handles rope generation
+// Handles rope generation and intersection 
 public class RopeManager : MonoBehaviour
 {
+    #region Rope Generation Params
     [SerializeField] private Material ropeMaterial;
     [SerializeField] private GameObject ropeSegmentPrefab;
     [SerializeField] private float segmentSpacing = 0.3f;
@@ -11,10 +12,22 @@ public class RopeManager : MonoBehaviour
 
     private Vector2 lastSegmentPosition;
     private GameObject lastSegment;
-    private bool isGenerating = false;
+
+    private LineRenderer lineRenderer;
+    #endregion
+
+    #region Rope Intersection Params
+    [SerializeField] private float intersectionThreshold = 0.2f; // How far away can the intersection points be TODO: Consider making this dynamic based on segment size or something 
+    private float checkInterval = 0.2f; // How often to check for intersections
+
+    private float checkTimer = 0f;
+
+    // Debug visualizer
+    private Vector2? lastIntersectionPoint = null;
+    #endregion
 
     private List<GameObject> ropeSegments = new List<GameObject>();
-    private LineRenderer lineRenderer;
+    private bool isGenerating = false;
 
     void Start()
     {
@@ -24,9 +37,10 @@ public class RopeManager : MonoBehaviour
     void Update()
     {
         HandleRopeGenInput();
+        HandleRopeIntersection();
     }
 
-    #region Rope Generation
+    #region Rope Generation Logic
     
     void InitRopeGenParams()
     {
@@ -110,4 +124,52 @@ public class RopeManager : MonoBehaviour
         }
     }
     #endregion
+
+    #region Rope Intersection Logic
+    void HandleRopeIntersection()
+    {
+        if ( isGenerating )
+        {
+            // Check for intersection periodically
+            checkTimer += Time.deltaTime;
+            if ( checkTimer >= checkInterval )
+            {
+                checkTimer = 0f;
+                CheckSelfIntersection();
+            }
+        }
+    }
+
+    void CheckSelfIntersection()
+    {
+        for ( int i = 0; i < ropeSegments.Count; i++ )
+        {
+            for ( int j = i + 2; j < ropeSegments.Count; j++ ) // Skip adjacent segments 
+            {
+                float dist = Vector2.Distance( ropeSegments[ i ].transform.position, ropeSegments[ j ].transform.position );
+                if ( dist < intersectionThreshold )
+                {
+                    lastIntersectionPoint = ( ropeSegments[ i ].transform.position + ropeSegments[ j ].transform.position ) / 2f;
+                    DoSomething();
+                    
+                    return; 
+                }
+            }
+        }
+    }
+
+    void DoSomething()
+    {
+        // TODO[ziana]
+    }
+    #endregion
+
+    void OnDrawGizmos()
+    {
+        if ( lastIntersectionPoint.HasValue )
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere( lastIntersectionPoint.Value, intersectionThreshold );
+        }
+    }
 }
