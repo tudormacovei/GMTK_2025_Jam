@@ -32,6 +32,22 @@ public class AudioManager : MonoBehaviour
         sfxSource.PlayOneShot(audioClip, sfxVolume);
     }
 
+    public void PlaySfxInterrupt(AudioClip clip)
+    {
+        if (clip == null) return;
+
+        // Stop whatever is playing, then play the new clip
+        sfxSource.Stop();
+        sfxSource.clip = clip;
+        sfxSource.volume = sfxVolume;
+        sfxSource.Play();
+    }
+
+    public bool IsSFXPlaying()
+    {
+        return sfxSource.isPlaying;
+    }
+
     public void SetSFXVolume(float volume)
     {
         sfxVolume = Mathf.Clamp01(volume);

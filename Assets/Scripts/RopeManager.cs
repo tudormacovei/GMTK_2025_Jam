@@ -33,6 +33,10 @@ public class RopeManager : MonoBehaviour
     private List<GameObject> ropeSegments = new List<GameObject>();
     private bool isGenerating = false;
 
+    public AudioClip segmentPlacement;
+    public AudioClip finishRope;
+
+
     void Start()
     {
         InitRopeGenParams();
@@ -104,10 +108,16 @@ public class RopeManager : MonoBehaviour
     void SpawnSegment()
     {
         GameObject newSegment = Instantiate( ropeSegmentPrefab, transform.position, Quaternion.identity );
-        
+        AudioManager.Instance.SetSFXVolume(0.5f);
+
         // Make some RBs static so that they anchor the whole rope
         if ( ropeSegments.Count % anchorToDynamicRatio == 0 )
+        {
             newSegment.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            
+            AudioManager.Instance.PlaySfx(segmentPlacement);
+        }
+            
 
         // Not first segment 
         if (lastSegment != null)
@@ -201,6 +211,9 @@ public class RopeManager : MonoBehaviour
     // Make rope and objects inside it dissapear
     void OnRopeLoopComplete()
     {
+        //Play finish audio, stop any playing audio clip
+        AudioManager.Instance.SetSFXVolume(1.0f);
+        AudioManager.Instance.PlaySfxInterrupt(finishRope);
         List<GameObject> objToDelete = GetObjectsInsideLoop();
         foreach (var obj in objToDelete)
         {
