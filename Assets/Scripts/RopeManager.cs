@@ -1,7 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 // Handles rope generation and intersection 
+// Rope is drawn on left mouse click down. If a loop is not completed, rope dissappears on left mouse click up
+// When a loop is completed, rope dissappears and all herdable objects inside the loop area dissapear as well
 public class RopeManager : MonoBehaviour
 {
     #region Rope Generation Params
@@ -42,7 +45,6 @@ public class RopeManager : MonoBehaviour
     }
 
     #region Generation Logic
-    
     void InitRopeGenParams()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -66,7 +68,6 @@ public class RopeManager : MonoBehaviour
         if ( Input.GetMouseButtonUp( 0 ) )
         {
             ClearRope();
-            isGenerating = false;
         }
 
         // Generate rope while holding mouse
@@ -85,6 +86,7 @@ public class RopeManager : MonoBehaviour
 
     void ClearRope()
     {
+        isGenerating = false;
         lastIntersectionPoint = null;
 
         lastSegmentPosition = transform.position;
@@ -153,7 +155,7 @@ public class RopeManager : MonoBehaviour
                 if ( dist < intersectionThreshold )
                 {
                     lastIntersectionPoint = ( ropeSegments[ i ].transform.position + ropeSegments[ j ].transform.position ) / 2f;
-                    CheckObjectsInsideLoop();
+                    OnRopeLoopComplete();
                     
                     return; 
                 }
@@ -164,9 +166,9 @@ public class RopeManager : MonoBehaviour
     }
     #endregion
 
-    #region Intersection Logic 
-
-    void CheckObjectsInsideLoop()
+    // Behaviour that happens when loop is complete
+    #region Loop Complete Logic 
+    List<GameObject> GetObjectsInsideLoop()
     {
         // Create polygon from rope segments 
         List<Vector2> polygon = new List<Vector2>();
@@ -182,17 +184,33 @@ public class RopeManager : MonoBehaviour
         Collider2D[] colliders = Physics2D.OverlapCircleAll( center, radius, herdablesLayer );
         // Debug.Log( "Found " + colliders.Length + " viable objects inside rope loop approx. circle.");
 
+        List<GameObject> objectsInside = new List<GameObject>();
         // For extra precision, make sure the objects are fully IN the polygon made by the rope
         foreach ( var col in colliders )
         {
             Vector2 objPos = col.transform.position;
             if ( IsPointInsidePolygon( objPos, polygon ) )
             {
-                Debug.Log( "Object inside rope loop: " + col.name );
+                objectsInside.Add( col.gameObject );
             }
         }
+
+        return objectsInside;
     }
 
+    // Make rope and objects inside it dissapear
+    void OnRopeLoopComplete()
+    {
+        List<GameObject> objToDelete = GetObjectsInsideLoop();
+        foreach (var obj in objToDelete)
+        {
+            Destroy( obj );
+        }
+
+        ClearRope();
+    }
+
+    #region Utils
     Vector2 GetLoopCenter( List<Vector2> points )
     {
         Vector2 sum = Vector2.zero;
@@ -235,6 +253,7 @@ public class RopeManager : MonoBehaviour
         }
         return ( crossings % 2 ) == 1;
     }
+    #endregion
     #endregion
 
     void OnDrawGizmos()
