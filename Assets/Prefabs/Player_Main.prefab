@@ -347,7 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2856148b637dd9140b2408a549318cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minimumScaleFactor: 0.5
-  maximumScaleFactor: 2
-  minimumY: -5
-  maximumY: 5
+  minimumScaleFactor: 0.7
+  maximumScaleFactor: 1.5
+  minimumY: -3
+  maximumY: 3
