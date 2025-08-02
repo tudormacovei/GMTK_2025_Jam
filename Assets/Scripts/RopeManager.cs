@@ -85,6 +85,8 @@ public class RopeManager : MonoBehaviour
 
     void ClearRope()
     {
+        lastIntersectionPoint = null;
+
         lastSegmentPosition = transform.position;
         lastSegment = null;
 
@@ -102,7 +104,7 @@ public class RopeManager : MonoBehaviour
         GameObject newSegment = Instantiate( ropeSegmentPrefab, transform.position, Quaternion.identity );
         
         // Make some RBs static so that they anchor the whole rope
-        if ( ropeSegments.Count % anchorToDymicRatio == 0 )
+        if ( ropeSegments.Count % anchorToDynamicRatio == 0 )
             newSegment.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
 
         // Not first segment 
@@ -242,69 +244,5 @@ public class RopeManager : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere( lastIntersectionPoint.Value, segmentSpacing );
         }
-    }
-}
-
-public class RopeLoopDetector : MonoBehaviour
-{
-    public List<Vector2> ropePoints; // Points forming the rope
-    public LayerMask detectionLayer; // Layer of objects to check
-
-    void CheckObjectsInsideLoop()
-    {
-        if ( !IsLoopClosed( ropePoints ) ) return;
-
-        Collider2D[] colliders = Physics2D.OverlapCircleAll( GetLoopCenter( ropePoints ), GetLoopRadius( ropePoints ), detectionLayer );
-
-        foreach ( var col in colliders )
-        {
-            Vector2 objPos = col.transform.position;
-            if ( IsPointInsidePolygon( objPos, ropePoints ) )
-            {
-                Debug.Log( "Object inside loop: " + col.name );
-            }
-        }
-    }
-
-    bool IsLoopClosed( List<Vector2> points )
-    {
-        // Simple check: first and last points are close enough
-        return Vector2.Distance( points[ 0 ], points[ points.Count - 1 ] ) < 0.1f;
-    }
-
-    Vector2 GetLoopCenter( List<Vector2> points )
-    {
-        Vector2 sum = Vector2.zero;
-        foreach ( var p in points ) sum += p;
-        return sum / points.Count;
-    }
-
-    float GetLoopRadius( List<Vector2> points )
-    {
-        Vector2 center = GetLoopCenter( points );
-        float maxDist = 0f;
-        foreach ( var p in points )
-        {
-            float dist = Vector2.Distance( center, p );
-            if ( dist > maxDist ) maxDist = dist;
-        }
-        return maxDist;
-    }
-
-    bool IsPointInsidePolygon( Vector2 point, List<Vector2> polygon )
-    {
-        int crossings = 0;
-        for ( int i = 0; i < polygon.Count; i++ )
-        {
-            Vector2 a = polygon[ i ];
-            Vector2 b = polygon[ ( i + 1 ) % polygon.Count ];
-
-            if ( ( ( a.y > point.y ) != ( b.y > point.y ) ) &&
-                ( point.x < ( b.x - a.x ) * ( point.y - a.y ) / ( b.y - a.y ) + a.x ) )
-            {
-                crossings++;
-            }
-        }
-        return ( crossings % 2 ) == 1;
     }
 }
