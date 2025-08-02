@@ -169,7 +169,7 @@ public class RopeManager : MonoBehaviour
         if ( lastIntersectionPoint.HasValue )
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere( lastIntersectionPoint.Value, intersectionThreshold );
+            Gizmos.DrawWireSphere( lastIntersectionPoint.Value, segmentSpacing );
         }
     }
 }
