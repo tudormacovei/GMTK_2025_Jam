@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf2edee5c58d82540a51f03df9d42094, type: 3}
-  m_Name: 2DURP
+  m_Name: NewURP
   m_EditorClassIdentifier: 
   k_AssetVersion: 12
   k_AssetPreviousVersion: 12
   m_RendererType: 1
   m_RendererData: {fileID: 0}
   m_RendererDataList:
-  - {fileID: 11400000, guid: 7b01607f8396aa34cb1d0477607733fa, type: 2}
+  - {fileID: 11400000, guid: be6150e0bc24d7a4bb7b94927eb89cce, type: 2}
   m_DefaultRendererIndex: 0
   m_RequireDepthTexture: 0
   m_RequireOpaqueTexture: 0
