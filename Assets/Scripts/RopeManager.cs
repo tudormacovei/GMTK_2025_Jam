@@ -8,7 +8,6 @@ using UnityEngine;
 public class RopeManager : MonoBehaviour
 {
     #region Rope Generation Params
-    [SerializeField] private Material ropeMaterial;
     [SerializeField] private GameObject ropeSegmentPrefab;
     [SerializeField] private float segmentSpacing = 0.3f;
     [SerializeField] private int anchorToDynamicRatio = 4;
@@ -47,11 +46,8 @@ public class RopeManager : MonoBehaviour
     #region Generation Logic
     void InitRopeGenParams()
     {
-        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer = GetComponent<LineRenderer>();    
         lineRenderer.positionCount = 0;
-        lineRenderer.material = new Material( ropeMaterial );
-        lineRenderer.startColor = Color.white;
-        lineRenderer.endColor = Color.white;
         lineRenderer.startWidth = 0.1f;
         lineRenderer.endWidth = 0.1f;
     }
