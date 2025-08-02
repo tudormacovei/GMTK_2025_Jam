@@ -138,7 +138,10 @@ public class RopeManager : MonoBehaviour
     {
         for ( int i = 0; i < ropeSegments.Count; i++ )
         {
-            lineRenderer.SetPosition( i, ropeSegments[ i ].transform.position );
+            Vector3 position = ropeSegments[ i ].transform.position;
+            position.z = 3; // Render the rope behind all other game objects   
+
+            lineRenderer.SetPosition( i, position );    
         }
     }
     #endregion
@@ -336,7 +339,6 @@ public class RopeManager : MonoBehaviour
         c.a = alpha;
         sr.color = c;
     }
-    #endregion
     #endregion
     #endregion
 
