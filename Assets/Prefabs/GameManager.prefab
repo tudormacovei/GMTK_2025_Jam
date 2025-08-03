@@ -44,4 +44,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4110754886f4b2f47b2b521ed1672b3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeImage: {fileID: 0}
+  fadeDuration: 1.5
   gameTimer: {fileID: 0}
+  mainMenuMusic: {fileID: 8300000, guid: c8b264ca605995044bb41cd370e35667, type: 3}
+  levelMusic:
+  - {fileID: 8300000, guid: fb85568416cdace4f9ca2bef6eded17b, type: 3}
+  - {fileID: 8300000, guid: 6a6a4fef436965240a84bf4019f86c52, type: 3}
+  - {fileID: 8300000, guid: fb85568416cdace4f9ca2bef6eded17b, type: 3}
+  - {fileID: 8300000, guid: 92973fbfd82f6b54ca1902b3cfabd84b, type: 3}
+  - {fileID: 8300000, guid: fb85568416cdace4f9ca2bef6eded17b, type: 3}
+  - {fileID: 8300000, guid: 1ccfec1b796067e49996ef0a99c363df, type: 3}
+  - {fileID: 8300000, guid: fb85568416cdace4f9ca2bef6eded17b, type: 3}
+  levelMusicLoops: 00010001000100
+  mainMenuMusicLoop: 1
