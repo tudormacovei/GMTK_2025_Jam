@@ -18,6 +18,7 @@ public class NPCRopeManager : MonoBehaviour
     private int currentPoint = 0;
 
     [SerializeField] private float moveSpeed = 1.5f;
+    [SerializeField] private float startDelay = 6f;
     [SerializeField] private float onRopeCompleteExplosionForce = 500f;
 
     public LayerMask detectionLayer;
@@ -46,6 +47,10 @@ public class NPCRopeManager : MonoBehaviour
 
     void Update()
     {
+        startDelay -= Time.deltaTime;
+        if ( startDelay > 0.0f )
+            return;
+
         if ( currentPoint < pathPoints.Length )
         {
             // Move toward the path point
