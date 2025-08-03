@@ -433,6 +433,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 898444448349476161, guid: 61e6384e4f49d1c4c98fa4b40da07e55, type: 3}
+      propertyPath: segmentMaxLimit
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 898444448349476161, guid: 61e6384e4f49d1c4c98fa4b40da07e55, type: 3}
+      propertyPath: segmentShakeLimit
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 1524938888257537199, guid: 61e6384e4f49d1c4c98fa4b40da07e55, type: 3}
       propertyPath: m_Name
       value: Player_Toddler Variant
