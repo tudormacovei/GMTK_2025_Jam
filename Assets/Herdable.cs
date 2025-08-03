@@ -17,5 +17,6 @@ public class Herdable : MonoBehaviour
     public void DestroyHerdable()
     {
         GameManager.Instance.UnregisterHerdable();
+        Destroy(gameObject);
     }
 }
