@@ -55,8 +55,8 @@ public class RopeManager : MonoBehaviour
     {
         lineRenderer = GetComponent<LineRenderer>();    
         lineRenderer.positionCount = 0;
-        lineRenderer.startWidth = 0.1f;
-        lineRenderer.endWidth = 0.1f;
+        lineRenderer.startWidth = 0.2f;
+        lineRenderer.endWidth = 0.2f;
     }
 
     void HandleRopeGenInput()
@@ -88,7 +88,7 @@ public class RopeManager : MonoBehaviour
             UpdateLineRenderer();
 
     }
-
+    
     void ClearRope()
     {
         isGenerating = false;
