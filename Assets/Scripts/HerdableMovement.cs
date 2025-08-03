@@ -19,6 +19,8 @@ public class HerdableMovement : MonoBehaviour
     // not startled means the herdable is roaming   
     private Vector3 pointToMoveTowards;
     private float elapsedTime;
+
+    private Animator Animator;
     
     enum HerdableState
     {
@@ -37,6 +39,7 @@ public class HerdableMovement : MonoBehaviour
         state = HerdableState.None;
         movementSpeed = 100.0f; // large value to make it visible if it hasn't been overwritten
         elapsedTime = 0.0f;
+        Animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -139,6 +142,11 @@ public class HerdableMovement : MonoBehaviour
                     state = HerdableState.None; // reached current movement goal, reset state
                 }
             }
+        }
+
+        if ( Animator != null )
+        {
+            Animator.SetBool( "isWalking", state != HerdableState.Waiting );
         }
     }
 
