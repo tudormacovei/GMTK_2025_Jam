@@ -1668,8 +1668,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeImage: {fileID: 384725460}
-  fadeDuration: 2
-  duration: 4
+  fadeDuration: 3.5
+  duration: 3
   camera: {fileID: 1442619183}
   startingCameraSize: 3
 --- !u!114 &811529412

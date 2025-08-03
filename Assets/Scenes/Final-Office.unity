@@ -413,6 +413,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2078a97c0fef3cb4b8fd624c0dab999b, type: 3}
+--- !u!20 &303436127 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 7318904266612509943, guid: 2078a97c0fef3cb4b8fd624c0dab999b, type: 3}
+  m_PrefabInstance: {fileID: 303436126}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &398029933
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,8 +1592,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeImage: {fileID: 555448525}
-  fadeDuration: 1.5
-  duration: 4
+  fadeDuration: 1
+  duration: 3
+  camera: {fileID: 303436127}
+  startingCameraSize: 3
 --- !u!114 &811529412
 MonoBehaviour:
   m_ObjectHideFlags: 0
