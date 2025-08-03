@@ -13,8 +13,8 @@ public class RopeManager : MonoBehaviour
     [SerializeField] private float segmentSpacing = 0.3f;
     [SerializeField] private int anchorToDynamicRatio = 4;
     [SerializeField] private float onRopeCompleteExplosionForce = 300f;
-    [SerializeField] private float segmentMaxLimit = 35;
-    [SerializeField] private float segmentShakeLimit = 25;
+    [SerializeField] private float segmentMaxLimit = 70;
+    [SerializeField] private float segmentShakeLimit = 55;
 
     private Vector2 lastSegmentPosition;
     private GameObject lastSegment;
