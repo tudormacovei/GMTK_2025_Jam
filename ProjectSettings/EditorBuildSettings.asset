@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Final-NursingHome.unity
     guid: 2170b4251a4e69244984c918c8eed04f
+  - enabled: 1
+    path: Assets/Scenes/FINAL-CUTSCENE.unity
+    guid: 3f3ecef91c8411a4b8ab392b54112020
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
