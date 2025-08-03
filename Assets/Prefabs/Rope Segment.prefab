@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: -3900367638572554184}
   - component: {fileID: 7357624329755966346}
   - component: {fileID: -6944619522966802164}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Rope Segment
-  m_TagString: Herder
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

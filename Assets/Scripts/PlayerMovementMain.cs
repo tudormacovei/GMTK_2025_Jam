@@ -30,11 +30,19 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 originalChildPosition;
     private Vector3 lastPosition;
 
+    [SerializeField] private Animator playerAnimator;
+    BoxCollider2D playerBoxCollider;
+
+    //layer masks
+    int playerLayer = 9;
+    int ropeLayer = 10;
+
     private void Awake()
     {
         // Get required components
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
+        playerBoxCollider = GetComponent<BoxCollider2D>();
 
         // Find the visual child (the one with the sprite renderer)
         SpriteRenderer childSprite = GetComponentInChildren<SpriteRenderer>();
@@ -150,7 +158,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateAnimations()
     {
-        if (animator != null)
+        /*if (animator != null)
         {
             // Set animation parameters
             animator.SetFloat("Speed", currentVelocity.magnitude);
@@ -163,6 +171,12 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetFloat("MoveX", movementInput.x);
                 animator.SetFloat("MoveY", movementInput.y);
             }
+        }*/
+
+        if (animator != null)
+        {
+            animator.SetBool("isWalking", isMoving);
+            animator.SetFloat("Speed", currentVelocity.magnitude);
         }
     }
 
@@ -197,4 +211,19 @@ public class PlayerMovement : MonoBehaviour
             currentVelocity = Vector2.zero;
         }
     }
+
+
+    //Player Box Collider Ignorable
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Herdables"))
+        {
+            Physics2D.IgnoreCollision(playerBoxCollider, collision.collider);
+        }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Rope"))
+        {
+            Physics2D.IgnoreLayerCollision(playerLayer, ropeLayer);
+        }
+    }   
 }
