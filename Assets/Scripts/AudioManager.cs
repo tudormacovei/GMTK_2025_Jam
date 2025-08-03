@@ -7,9 +7,11 @@ public class AudioManager : MonoBehaviour
 
     [Header("Audio Sources")]
     [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioSource musicSource;
 
     [Header("Volume Settings")]
     [Range(0f, 1f)] public float sfxVolume = 1f;
+    [Range(0f, 1f)] public float musicVolume = 1f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void Awake()
@@ -41,6 +43,21 @@ public class AudioManager : MonoBehaviour
         sfxSource.clip = clip;
         sfxSource.volume = sfxVolume;
         sfxSource.Play();
+    }
+
+    public void PlayMusic(AudioClip musicClip, bool loop = true)
+    {
+        if (musicClip == null || musicSource.clip == musicClip) return;
+
+        musicSource.clip = musicClip;
+        musicSource.volume = musicVolume;
+        musicSource.loop = loop;
+        musicSource.Play();
+    }
+
+    public void StopMusic()
+    {
+        musicSource.Stop();
     }
 
     public bool IsSFXPlaying()
