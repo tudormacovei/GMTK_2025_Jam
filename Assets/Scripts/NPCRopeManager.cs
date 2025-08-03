@@ -148,7 +148,7 @@ public class NPCRopeManager : MonoBehaviour
             yield return null;
         }
 
-        Destroy( Player.gameObject );
+        GameManager.Instance.LoadNextLevel();
     }
 
     #region Utils

@@ -471,6 +471,7 @@ MonoBehaviour:
   segmentSpacing: 0.3
   anchorToDynamicRatio: 4
   onRopeCompleteExplosionForce: 300
+  segmentLimit: 35
   intersectionThreshold: 0.2
   herdablesLayer:
     serializedVersion: 2

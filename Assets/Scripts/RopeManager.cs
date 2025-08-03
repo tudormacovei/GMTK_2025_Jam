@@ -13,6 +13,8 @@ public class RopeManager : MonoBehaviour
     [SerializeField] private float segmentSpacing = 0.3f;
     [SerializeField] private int anchorToDynamicRatio = 4;
     [SerializeField] private float onRopeCompleteExplosionForce = 300f;
+    [SerializeField] private float segmentMaxLimit = 35;
+    [SerializeField] private float segmentShakeLimit = 25;
 
     private Vector2 lastSegmentPosition;
     private GameObject lastSegment;
@@ -76,7 +78,15 @@ public class RopeManager : MonoBehaviour
         // Generate rope while holding mouse
         if ( isGenerating )
         {
+            if (ropeSegments.Count >= segmentMaxLimit)
+            { 
+                RopeShake();
+                Invoke("ClearRope", 15f);
+                return;
+            }
+
             float distance = Vector2.Distance( transform.position, lastSegmentPosition );
+
             if ( distance >= segmentSpacing )
             {
                 SpawnSegment();
@@ -132,6 +142,9 @@ public class RopeManager : MonoBehaviour
         lastSegment = newSegment;
         ropeSegments.Add( newSegment );
         lineRenderer.positionCount = ropeSegments.Count;
+
+        //Check for segment count to update color
+        UpdateRopeColor(ropeSegments.Count);
     }
 
     void UpdateLineRenderer()
@@ -144,6 +157,20 @@ public class RopeManager : MonoBehaviour
             lineRenderer.SetPosition( i, position );    
         }
     }
+
+    public void UpdateRopeColor(int currentValue)
+    {
+        if (currentValue <= segmentShakeLimit)
+        {
+            lineRenderer.material.color = Color.white;
+            return;
+        }
+
+        float t = Mathf.InverseLerp(segmentShakeLimit, segmentMaxLimit, currentValue);
+        Color targetColor = Color.Lerp(Color.white, Color.red, t);
+        lineRenderer.material.color = targetColor;
+    }
+
     #endregion
 
     #region Intersection Check
@@ -288,6 +315,19 @@ public class RopeManager : MonoBehaviour
         }
         
         ClearRope();
+    }
+
+    void RopeShake()
+    {
+        foreach (GameObject seg in ropeSegments)
+        {
+            Rigidbody2D rb = seg.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                Vector2 explosionDir = rb.transform.position.normalized;
+                rb.AddForce(explosionDir * onRopeCompleteExplosionForce);
+            }
+        }
     }
 
     #region Utils
