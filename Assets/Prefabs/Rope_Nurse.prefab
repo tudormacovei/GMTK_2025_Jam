@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4789490816702821399}
   - component: {fileID: 3038541820445910055}
   - component: {fileID: -8557802082183934035}
+  - component: {fileID: 6987548798634078202}
   m_Layer: 0
   m_Name: Rope_Nurse
   m_TagString: Untagged
@@ -226,3 +227,19 @@ MonoBehaviour:
   detectionLayer:
     serializedVersion: 2
     m_Bits: 0
+--- !u!114 &6987548798634078202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682972774978697412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2856148b637dd9140b2408a549318cfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimumScaleFactor: 0.7
+  maximumScaleFactor: 1.5
+  minimumY: -3
+  maximumY: 3
