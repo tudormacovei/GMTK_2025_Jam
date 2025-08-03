@@ -37,6 +37,9 @@ public class PlayerMovement : MonoBehaviour
     int playerLayer = 9;
     int ropeLayer = 10;
 
+    bool isMovingUD = false;
+    bool isMovingLR = false;
+
     private void Awake()
     {
         // Get required components
@@ -78,6 +81,8 @@ public class PlayerMovement : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
 
         movementInput = new Vector2(horizontal, vertical).normalized;
+        isMovingUD = vertical != 0;
+        isMovingLR = horizontal != 0;
 
         // Check if running (shift key)
         isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
@@ -176,6 +181,8 @@ public class PlayerMovement : MonoBehaviour
         if (animator != null)
         {
             animator.SetBool("isWalking", isMoving);
+            animator.SetBool("isWalkingUD", isMovingUD);
+            animator.SetBool("isWalkingLR", isMovingLR);
             animator.SetFloat("Speed", currentVelocity.magnitude);
         }
     }
