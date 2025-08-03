@@ -67,7 +67,7 @@ public class HerdableMovement : MonoBehaviour
 
         if (fencesToAvoid.Count > 0)
         {
-            state = HerdableState.Roaming;
+            state = HerdableState.Startled; 
 
             foreach (var position in fencesToAvoid)
             {
@@ -127,7 +127,7 @@ public class HerdableMovement : MonoBehaviour
             // check if you have reached the pointToMoveTowards (the goal)
             Vector2 delta = new(gameObject.transform.position.x - pointToMoveTowards.x, gameObject.transform.position.y - pointToMoveTowards.y);
 
-            if (delta.magnitude < 0.5f)
+            if (delta.magnitude < 0.1f)
             {
                 if (state == HerdableState.Roaming)
                 {
@@ -158,8 +158,5 @@ public class HerdableMovement : MonoBehaviour
     {
         UpdateState();
         HandleMovement();
-        // set state
-        // process state
-
     }
 }

@@ -1,7 +1,12 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public Image fadeImage;
+    public float fadeDuration = 1.5f;
     public static GameManager Instance { get; private set; }
 
     [Header("Game State")]
@@ -9,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameTimer gameTimer;
+    
+    private int herdableCounter = 0;
 
     private void Awake()
     {
@@ -19,7 +26,6 @@ public class GameManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject); 
     }
 
     private void Start()
@@ -29,8 +35,15 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            return;
+        }
         IsGameRunning = true;
-        gameTimer.StartTimer();
+        if (gameTimer != null)
+        {
+            gameTimer.StartTimer();
+        }
 
         // TODO: Reset score, spawn player, etc.
         Debug.Log("Game Started");
@@ -39,8 +52,12 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         IsGameRunning = false;
-        gameTimer.StopTimer();
-        gameTimer.ResetTimer();
+
+        if (gameTimer != null)
+        {
+            gameTimer.StopTimer();
+            gameTimer.ResetTimer();
+        }
 
         // TODO: Show game over UI, final time, etc.
         Debug.Log("Game Ended");
@@ -50,5 +67,48 @@ public class GameManager : MonoBehaviour
     {
         EndGame();
         StartGame();
+    }
+    public void LoadLevel(string levelName)
+    {
+        SceneManager.LoadScene(levelName);
+    }
+
+    public void LoadNextLevel()
+    {
+        StartCoroutine(FadeAndLoadNext());
+    }
+
+    private IEnumerator FadeAndLoadNext()
+    {
+        float elapsed = 0f;
+        Color color = fadeImage.color;
+
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Clamp01(elapsed / fadeDuration);
+            fadeImage.color = new Color(color.r, color.g, color.b, alpha);
+            yield return null;
+        }
+
+        fadeImage.color = new Color(color.r, color.g, color.b, 1f); // Ensure full black at end
+        // Load next scene at the end
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+    }
+
+    public void RegisterHerdable()
+    {
+        herdableCounter++;
+    }
+
+    public void UnregisterHerdable()
+    {
+        herdableCounter--;
+        if (herdableCounter <= 0)
+        {
+            // Win condition triggers fade and level load
+            LoadNextLevel();
+        }
     }
 }

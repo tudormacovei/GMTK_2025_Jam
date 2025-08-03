@@ -1,51 +1,99 @@
-using Unity.VisualScripting;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 public class ModifyPostProcessing : MonoBehaviour
 {
-    LensDistortion lensDistortion;
-    public float duration = 3.0f; // Duration of the effect in seconds
+    [Header("Fade Settings")]
+    [Tooltip("UI Image covering the screen, starts black.")]
+    public Image fadeImage;
+    [Tooltip("Time it takes to fade in from black at start.")]
+    public float fadeDuration = 2.0f;
+
+    [Header("Glitch Settings")]
+    public float duration = 3.0f; // total duration of the distortion effect
+
+    private LensDistortion lensDistortion;
+
+    public Camera camera;
+    public float startingCameraSize = 3f;
+    private float initialCameraSize;
 
     private void Start()
     {
-        var v = GetComponent<Volume>();
-        v.profile.TryGet<LensDistortion>(out lensDistortion);
+        // grab the lens distortion override
+        var volume = GetComponent<Volume>();
+        volume.profile.TryGet(out lensDistortion);
 
-        // Start the glitchy effect at the beginning of the game
+        // kick off the startup sequence
+        StartCoroutine(StartupSequence());
+        initialCameraSize = camera.orthographicSize;
+        camera.orthographicSize = startingCameraSize;
+    }
+
+    private IEnumerator StartupSequence()
+    {
+        // 1) Fade in from black
+        StartCoroutine(FadeFromBlack());
+
+        // 2) Wait until 0.5s from the very start
+        yield return new WaitForSeconds(0.2f);
+
+        // 3) Begin glitch/distortion
         StartCoroutine(GlitchEffect());
     }
 
-    // Coroutine that handles the glitchy oscillation
-    private System.Collections.IEnumerator GlitchEffect()
+    private IEnumerator FadeFromBlack()
+    {
+        float elapsed = 0f;
+        // ensure we start fully black
+        Color c = fadeImage.color;
+        c.a = 1f;
+        fadeImage.color = c;
+
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = 1f - Mathf.Clamp01(elapsed / fadeDuration) * Mathf.Clamp01(elapsed / fadeDuration);
+            fadeImage.color = new Color(c.r, c.g, c.b, alpha);
+            camera.orthographicSize = Mathf.Lerp(startingCameraSize, initialCameraSize, alpha);
+
+            yield return null;
+        }
+
+        // ensure fully transparent
+        fadeImage.color = new Color(c.r, c.g, c.b, 0f);
+    }
+
+    private IEnumerator GlitchEffect()
     {
         float elapsed = 0f;
 
         while (elapsed < duration)
         {
+            // x goes 0→1 over the course of 'duration'
+            float x = elapsed / duration;
 
-            float x = elapsed / duration; // Normalize elapsed time to [0, 1]
+            // optional speed ramp
             float speed = 2.0f - x;
 
-            float frequency = 10f; // Speed of oscillation
-            float amplitude = 0.1f * (1.0f - x);
+            // your sine-based color shift
+            float frequency = 10f;
+            float amplitude = 0.1f * (1f - x);
             float value = Mathf.Sin(elapsed * frequency) * amplitude;
-
             Shader.SetGlobalFloat("_colorshiftFactor", value);
 
-            lensDistortion.intensity.value = (-1.0f) * (1.0f - x);
+            // ramp lens distortion from -1→0
+            lensDistortion.intensity.value = -1f * (1f - x);
 
             elapsed += Time.deltaTime * speed;
             yield return null;
         }
 
-        // Reset value to 0 after the effect ends
+        // make sure we clear it
         Shader.SetGlobalFloat("_colorshiftFactor", 0f);
-    }
-
-    private void Update()
-    {
-        // No need to update continuously after the effect
+        lensDistortion.intensity.value = 0f;
     }
 }

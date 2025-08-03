@@ -277,7 +277,14 @@ public class RopeManager : MonoBehaviour
         // Destroy the objects after fade is complete 
         foreach ( var obj in objToDelete )
         {
-            Destroy( obj );
+            if (obj.GetComponent<Herdable>() != null)
+            {
+                obj.GetComponent<Herdable>().DestroyHerdable();
+            }
+            else
+            {
+                Destroy(obj); // keep it in just to be safe
+            }
         }
         
         ClearRope();
