@@ -13,6 +13,7 @@ public class RopeManager : MonoBehaviour
     [SerializeField] private float segmentSpacing = 0.3f;
     [SerializeField] private int anchorToDynamicRatio = 4;
     [SerializeField] private float onRopeCompleteExplosionForce = 300f;
+    [SerializeField] private float segmentLimit = 30;
 
     private Vector2 lastSegmentPosition;
     private GameObject lastSegment;
@@ -76,7 +77,14 @@ public class RopeManager : MonoBehaviour
         // Generate rope while holding mouse
         if ( isGenerating )
         {
+            if (ropeSegments.Count >= segmentLimit)
+            {
+                ClearRope();
+                return;
+            }
+
             float distance = Vector2.Distance( transform.position, lastSegmentPosition );
+
             if ( distance >= segmentSpacing )
             {
                 SpawnSegment();

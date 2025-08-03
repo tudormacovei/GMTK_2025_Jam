@@ -67,9 +67,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 20
   orthographic: 1
-  orthographic size: 1.5
+  orthographic size: 1.6
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -116,7 +116,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -471,6 +471,7 @@ MonoBehaviour:
   segmentSpacing: 0.3
   anchorToDynamicRatio: 4
   onRopeCompleteExplosionForce: 300
+  segmentLimit: 35
   intersectionThreshold: 0.2
   herdablesLayer:
     serializedVersion: 2
