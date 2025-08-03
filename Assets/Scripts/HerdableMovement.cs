@@ -25,6 +25,7 @@ public class HerdableMovement : MonoBehaviour
         None,
         Roaming,
         Startled,
+        AvoidingFence,
         Waiting
     }
 
@@ -67,7 +68,7 @@ public class HerdableMovement : MonoBehaviour
 
         if (fencesToAvoid.Count > 0)
         {
-            state = HerdableState.Startled; 
+            state = HerdableState.AvoidingFence; 
 
             foreach (var position in fencesToAvoid)
             {
@@ -79,9 +80,9 @@ public class HerdableMovement : MonoBehaviour
             // directionToMoveTowards might be zero here, possible issues if that's the case
             directionToMoveTowards.Normalize();
             pointToMoveTowards = directionToMoveTowards * movementPointSelectDistanceRoaming + gameObject.transform.position;
-            movementSpeed = roamingMovementSpeed;
+            movementSpeed = startledMovementSpeed;
         }
-        else if (herdersToAvoid.Count > 0) // code duplication :(
+        else if (herdersToAvoid.Count > 0 && state != HerdableState.AvoidingFence) // code duplication :(
         {
             state = HerdableState.Startled;
 
@@ -150,7 +151,6 @@ public class HerdableMovement : MonoBehaviour
             direction.Normalize();
             Vector3 newPosition = Time.fixedDeltaTime * movementSpeed * direction + gameObject.transform.position; 
             gameObject.GetComponent<Transform>().position = newPosition;
-            // if reached point within epsilon, set state to None 
         }
     }
 

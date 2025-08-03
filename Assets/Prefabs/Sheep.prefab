@@ -120,9 +120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd8e81a497be5a844ac081cb7827b80d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roamingMovementSpeed: 1
-  startledMovementSpeed: 1.5
-  WaitingTime: 0.3
+  roamingMovementSpeed: 2
+  startledMovementSpeed: 3
+  WaitingTime: 0.2
   movementPointSelectDistanceRoaming: 1
   movementPointSelectDistanceStartled: 3
 --- !u!58 &3177205273210303666
