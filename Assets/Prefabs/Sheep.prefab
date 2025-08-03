@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5891645913254501952}
   - component: {fileID: 3177205273210303666}
   - component: {fileID: 2413895142503638530}
+  - component: {fileID: 5122263324737730485}
   m_Layer: 6
   m_Name: Sheep
   m_TagString: Untagged
@@ -80,8 +81,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.6093508, g: 0.75072116, b: 0.81761, a: 1}
+  m_Sprite: {fileID: -823842378, guid: d0f7f2f4d62587c46a63d390cdda7f10, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -119,11 +120,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd8e81a497be5a844ac081cb7827b80d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roamingMovementSpeed: 0.2
-  startledMovementSpeed: 1
-  WaitingTime: 0.5
-  movementPointSelectDistanceRoaming: 0.75
-  movementPointSelectDistanceStartled: 1.5
+  roamingMovementSpeed: 1
+  startledMovementSpeed: 1.5
+  WaitingTime: 0.3
+  movementPointSelectDistanceRoaming: 1
+  movementPointSelectDistanceStartled: 3
 --- !u!58 &3177205273210303666
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -198,7 +199,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.8902475, y: 1.5957143}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -206,3 +207,15 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 0.250528}
   m_EdgeRadius: 0
+--- !u!114 &5122263324737730485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3213535339301684786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9902be0b592c49d4bb262ad4ba74d546, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
