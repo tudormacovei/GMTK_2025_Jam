@@ -1133,6 +1133,22 @@ PrefabInstance:
       propertyPath: gameTimer
       value: 
       objectReference: {fileID: 2117793925}
+    - target: {fileID: 1952454946357894875, guid: b615533f7967b84469f507f038fcaf61, type: 3}
+      propertyPath: mainMenuMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: aa80fbe4a35abdb40b36b667cd3d0e9a, type: 3}
+    - target: {fileID: 1952454946357894875, guid: b615533f7967b84469f507f038fcaf61, type: 3}
+      propertyPath: levelMusic.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1952454946357894875, guid: b615533f7967b84469f507f038fcaf61, type: 3}
+      propertyPath: 'levelMusic.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 3c60383e39dc7c5438b4f20dcc7f5bef, type: 3}
+    - target: {fileID: 1952454946357894875, guid: b615533f7967b84469f507f038fcaf61, type: 3}
+      propertyPath: 'levelMusic.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: aa80fbe4a35abdb40b36b667cd3d0e9a, type: 3}
     - target: {fileID: 2172411557930992761, guid: b615533f7967b84469f507f038fcaf61, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.0280201

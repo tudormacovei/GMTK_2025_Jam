@@ -17,6 +17,12 @@ public class GameManager : MonoBehaviour
     
     private int herdableCounter = 0;
 
+    [SerializeField] private AudioClip mainMenuMusic;
+    [SerializeField] private AudioClip[] levelMusic;
+    [SerializeField] private bool[] levelMusicLoops; // MUST be same length as levelMusic
+
+    [SerializeField] private bool mainMenuMusicLoop = true;
+
     private void Awake()
     {
         // Singleton pattern
@@ -30,7 +36,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-         StartGame();
+        PlayMusicForCurrentScene();
+        StartGame();
     }
 
     public void StartGame()
@@ -109,6 +116,25 @@ public class GameManager : MonoBehaviour
         {
             // Win condition triggers fade and level load
             LoadNextLevel();
+        }
+    }
+
+    private void PlayMusicForCurrentScene()
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        if (sceneName == "MainMenu")
+        {
+            AudioManager.Instance.PlayMusic(mainMenuMusic, mainMenuMusicLoop);
+        }
+        else
+        {
+            int levelIndex = SceneManager.GetActiveScene().buildIndex - 1; // MainMenu is buildIndex 0
+            if (levelIndex >= 0 && levelIndex < levelMusic.Length)
+            {
+                bool loop = levelIndex < levelMusicLoops.Length ? levelMusicLoops[levelIndex] : true;
+                AudioManager.Instance.PlayMusic(levelMusic[levelIndex], loop);
+            }
         }
     }
 }
