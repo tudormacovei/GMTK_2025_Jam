@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5712563508308443755}
   - component: {fileID: 4789490816702821399}
-  - component: {fileID: 3808830187541563509}
   - component: {fileID: 3038541820445910055}
   - component: {fileID: -8557802082183934035}
   m_Layer: 0
@@ -90,33 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &3808830187541563509
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1682972774978697412}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!120 &3038541820445910055
 LineRenderer:
   serializedVersion: 2
@@ -141,7 +113,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 780def5ca67f2574999d90b76338c501, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -216,7 +188,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
@@ -236,10 +208,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009cf6c868c6a054b9671895f0caa93a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ropeSegmentPrefab: {fileID: 0}
+  Player: {fileID: 0}
+  ropeSegmentPrefab: {fileID: 1998350959610465394, guid: b1dc751f2731b2745a0011b92a9f0b84, type: 3}
   segmentSpacing: 0.3
-  anchorToDynamicRatio: 4
-  pathPoints: []
+  anchorToDynamicRatio: 6
+  pathPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   moveSpeed: 2
   onRopeCompleteExplosionForce: 300
   detectionLayer:

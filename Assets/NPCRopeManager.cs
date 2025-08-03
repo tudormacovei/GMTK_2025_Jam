@@ -1,9 +1,12 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 // NPC moves in a pre-defined path and lays down rope 
 public class NPCRopeManager : MonoBehaviour
 {
+    [SerializeField] private GameObject Player;
+
     [Header("Rope Generation")]
     [SerializeField] private GameObject ropeSegmentPrefab;
     [SerializeField] private float segmentSpacing = 0.3f;
@@ -14,8 +17,8 @@ public class NPCRopeManager : MonoBehaviour
     [SerializeField] private Transform[] pathPoints;
     private int currentPoint = 0;
 
-    [SerializeField] private float moveSpeed = 2f;
-    // [SerializeField] private float onRopeCompleteExplosionForce = 300f;
+    [SerializeField] private float moveSpeed = 1.5f;
+    [SerializeField] private float onRopeCompleteExplosionForce = 500f;
 
     public LayerMask detectionLayer;
 
@@ -24,14 +27,16 @@ public class NPCRopeManager : MonoBehaviour
 
     private LineRenderer lineRenderer;
 
+    private bool isLoopComplete = false;
+
     private const float EPS = 0.05f; 
 
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 0;
-        lineRenderer.startWidth = 0.1f;
-        lineRenderer.endWidth = 0.1f;
+        lineRenderer.startWidth = 0.2f;
+        lineRenderer.endWidth = 0.2f;
         
         lastSegmentPosition = transform.position;
         lastSegment = null;
@@ -41,31 +46,33 @@ public class NPCRopeManager : MonoBehaviour
 
     void Update()
     {
-        if ( currentPoint >= pathPoints.Length )
+        if ( currentPoint < pathPoints.Length )
         {
-            // TODO: Handle OnLoopComplete - add force to rope and make player fade out
-            return;
+            // Move toward the path point
+            Vector2 target = pathPoints[ currentPoint ].position;
+            transform.position = Vector2.MoveTowards( transform.position, target, moveSpeed * Time.deltaTime );
+
+            // Lay rope as NPC moves
+            float distance = Vector2.Distance( transform.position, lastSegmentPosition );
+            if ( distance >= segmentSpacing )
+            {
+                SpawnSegment();
+                lastSegmentPosition = transform.position;
+            }
+
+            // Advance to next point if reached
+            if ( Vector2.Distance( transform.position, target ) < EPS )
+            {
+                currentPoint++;
+            }
         }
-
-        // Move toward the path point
-        Vector2 target = pathPoints[ currentPoint ].position;
-        transform.position = Vector2.MoveTowards( transform.position, target, moveSpeed * Time.deltaTime );
-
-        // Lay rope as NPC moves
-        float distance = Vector2.Distance( transform.position, lastSegmentPosition );
-        if ( distance >= segmentSpacing )
+        else if ( !isLoopComplete )
         {
-            SpawnSegment();
-            lastSegmentPosition = transform.position;
+            isLoopComplete = true;
+            OnLoopComplete();
         }
 
         UpdateLineRenderer();
-
-        // Advance to next point if reached
-        if ( Vector2.Distance( transform.position, target ) < EPS )
-        {
-            currentPoint++;
-        }
     }
 
     // TODO: Add Audio
@@ -102,4 +109,55 @@ public class NPCRopeManager : MonoBehaviour
             lineRenderer.SetPosition( i, position );
         }
     }
+
+    void OnLoopComplete()
+    {
+        StartCoroutine( FadeRopeAndPlayer() );
+    }
+
+    IEnumerator FadeRopeAndPlayer( float fadeDuration = 2f )
+    {
+        // Apply a force to each segment RB
+        foreach ( GameObject seg in ropeSegments )
+        {
+            Rigidbody2D rb = seg.GetComponent<Rigidbody2D>();
+            if ( rb != null && Player != null)
+            {
+                Vector2 explosionDir = ( rb.transform.position - Player.transform.position ).normalized;
+                rb.AddForce( explosionDir * onRopeCompleteExplosionForce );
+            }
+        }
+
+        // Wait a bit before fading so the force on the rope is visible
+        yield return new WaitForSeconds( 1f );
+
+        // Fade rope and objects 
+        float elapsed = 0f;
+        while ( elapsed < fadeDuration )
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp( 1f, 0f, elapsed / fadeDuration );
+            SetLineRendererAlpha( alpha );
+            SetSpriteRendererAlpha( Player.GetComponentInChildren<SpriteRenderer>(), alpha );
+
+            yield return null;
+        }
+
+        Destroy( Player.gameObject );
+    }
+
+    #region Utils
+    void SetLineRendererAlpha( float alpha )
+    {
+        Color c = lineRenderer.material.color;
+        c.a = alpha;
+        lineRenderer.material.color = c;
+    }
+    void SetSpriteRendererAlpha( SpriteRenderer sr, float alpha )
+    {
+        Color c = sr.color;
+        c.a = alpha;
+        sr.color = c;
+    }
+    #endregion
 }

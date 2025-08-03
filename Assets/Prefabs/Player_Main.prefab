@@ -176,7 +176,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1fff1426fd548e54981b10029ee336bd, type: 2}
+  - {fileID: 2100000, guid: 780def5ca67f2574999d90b76338c501, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -251,7 +251,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
@@ -315,6 +315,7 @@ MonoBehaviour:
   bounceDistance: 1
   currentVelocity: {x: 0, y: 0}
   isMoving: 0
+  playerAnimator: {fileID: 0}
 --- !u!114 &7816050034918472821
 MonoBehaviour:
   m_ObjectHideFlags: 0
