@@ -9,14 +9,26 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: f61dbd211f1d70d469ec533c3001dc94
   - enabled: 1
+    path: Assets/Scenes/Final-Cutscene-Field.unity
+    guid: fcc56fc0c830e3341a5390d32657f5da
+  - enabled: 1
     path: Assets/Scenes/Final-Field.unity
     guid: 68c021e86d314944aa32a0714d1b0012
+  - enabled: 1
+    path: Assets/Scenes/Final-Cutscene-Office.unity
+    guid: 0c2041bfe3f786d4da8e03461916668e
   - enabled: 1
     path: Assets/Scenes/Final-Office.unity
     guid: 864edb5df4153a44a836d56692b4a99f
   - enabled: 1
+    path: Assets/Scenes/Final-Cutscene-NursingHome.unity
+    guid: b7d5c1f362c3d7d44a176d1d3788bce8
+  - enabled: 1
     path: Assets/Scenes/Final-NursingHome.unity
     guid: 2170b4251a4e69244984c918c8eed04f
+  - enabled: 1
+    path: Assets/Scenes/FINAL-CUTSCENE.unity
+    guid: 3f3ecef91c8411a4b8ab392b54112020
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

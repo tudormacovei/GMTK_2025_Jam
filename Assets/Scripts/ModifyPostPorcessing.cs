@@ -47,6 +47,11 @@ public class ModifyPostProcessing : MonoBehaviour
 
     private IEnumerator FadeFromBlack()
     {
+        if (fadeImage == null)
+        {
+            yield break;
+        }
+
         float elapsed = 0f;
         // ensure we start fully black
         Color c = fadeImage.color;
