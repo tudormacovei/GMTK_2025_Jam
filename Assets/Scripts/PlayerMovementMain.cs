@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 originalChildPosition;
     private Vector3 lastPosition;
 
+    [SerializeField]private Animator playerAnimator;
+
     private void Awake()
     {
         // Get required components
@@ -150,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateAnimations()
     {
-        if (animator != null)
+        /*if (animator != null)
         {
             // Set animation parameters
             animator.SetFloat("Speed", currentVelocity.magnitude);
@@ -163,6 +165,12 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetFloat("MoveX", movementInput.x);
                 animator.SetFloat("MoveY", movementInput.y);
             }
+        }*/
+
+        if (animator != null)
+        {
+            animator.SetBool( "isWalking", isMoving );
+            animator.SetFloat( "Speed", currentVelocity.magnitude );
         }
     }
 
