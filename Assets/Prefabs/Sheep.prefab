@@ -120,11 +120,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd8e81a497be5a844ac081cb7827b80d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roamingMovementSpeed: 2
-  startledMovementSpeed: 3
-  WaitingTime: 0.2
+  roamingMovementSpeed: 1.5
+  startledMovementSpeed: 2.2
+  WaitingTime: 0.3
   movementPointSelectDistanceRoaming: 1
-  movementPointSelectDistanceStartled: 3
+  movementPointSelectDistanceStartled: 2
 --- !u!58 &3177205273210303666
 CircleCollider2D:
   m_ObjectHideFlags: 0
