@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9c26bdf2c97d1894698c67a025e2ac37
+guid: bc643b7d56db60f4da862b88ddb3d47b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 200
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MenuCassette5_0
+      name: tv_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1292
-        height: 732
+        x: 85
+        y: 64
+        width: 2265
+        height: 1498
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,8 +125,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f74dc5e79aa5c484089efd2581e01076
-      internalID: 230181362
+      spriteID: a219b5e3c4b56f84598bd8931d001599
+      internalID: -765428874
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 91f95de1987adc549a021d16220689b2
+    spriteID: 1e20d43232563ec45980f754a34cf3a7
     internalID: 0
     vertices: []
     indices: 
@@ -145,7 +145,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      MenuCassette5_0: 230181362
+      tv_0: -765428874
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

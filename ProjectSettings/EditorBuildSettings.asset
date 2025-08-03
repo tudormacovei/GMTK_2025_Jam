@@ -15,8 +15,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Final-Field.unity
     guid: 68c021e86d314944aa32a0714d1b0012
   - enabled: 1
-    path: Assets/Scenes/Final-Cutscene-Office.unity
-    guid: 0c2041bfe3f786d4da8e03461916668e
+    path: Assets/Scenes/FINAL-OFFICE-CUTSCENE.unity
+    guid: bbfa1d953c46d4e4897513a86e971e6b
   - enabled: 1
     path: Assets/Scenes/Final-Office.unity
     guid: 864edb5df4153a44a836d56692b4a99f

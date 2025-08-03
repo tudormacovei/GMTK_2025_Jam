@@ -72,6 +72,30 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7318904266612509943, guid: 2078a97c0fef3cb4b8fd624c0dab999b, type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7318904266612509943, guid: 2078a97c0fef3cb4b8fd624c0dab999b, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.5921569
+      objectReference: {fileID: 0}
+    - target: {fileID: 7318904266612509943, guid: 2078a97c0fef3cb4b8fd624c0dab999b, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.5921569
+      objectReference: {fileID: 0}
+    - target: {fileID: 7318904266612509943, guid: 2078a97c0fef3cb4b8fd624c0dab999b, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.5921569
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816050034918472821, guid: 2078a97c0fef3cb4b8fd624c0dab999b, type: 3}
+      propertyPath: segmentMaxLimit
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816050034918472821, guid: 2078a97c0fef3cb4b8fd624c0dab999b, type: 3}
+      propertyPath: segmentShakeLimit
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 8441559593711136155, guid: 2078a97c0fef3cb4b8fd624c0dab999b, type: 3}
       propertyPath: m_Name
       value: Player_Toddler Variant
