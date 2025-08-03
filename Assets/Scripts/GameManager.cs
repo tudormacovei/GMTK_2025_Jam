@@ -1,8 +1,12 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public Image fadeImage;
+    public float fadeDuration = 1.5f;
     public static GameManager Instance { get; private set; }
 
     [Header("Game State")]
@@ -10,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameTimer gameTimer;
+    
+    private int herdableCounter = 0;
 
     private void Awake()
     {
@@ -56,15 +62,47 @@ public class GameManager : MonoBehaviour
         EndGame();
         StartGame();
     }
-
-    public void LoadLevel(string LevelName)
+    public void LoadLevel(string levelName)
     {
-        SceneManager.LoadScene(LevelName);
+        SceneManager.LoadScene(levelName);
     }
 
     public void LoadNextLevel()
     {
-        print("HERE!");
+        StartCoroutine(FadeAndLoadNext());
+    }
+
+    private IEnumerator FadeAndLoadNext()
+    {
+        float elapsed = 0f;
+        Color color = fadeImage.color;
+
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Clamp01(elapsed / fadeDuration);
+            fadeImage.color = new Color(color.r, color.g, color.b, alpha);
+            yield return null;
+        }
+
+        fadeImage.color = new Color(color.r, color.g, color.b, 1f); // Ensure full black at end
+        // Load next scene at the end
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+    }
+
+    public void RegisterHerdable()
+    {
+        herdableCounter++;
+    }
+
+    public void UnregisterHerdable()
+    {
+        herdableCounter--;
+        if (herdableCounter <= 0)
+        {
+            // Win condition triggers fade and level load
+            LoadNextLevel();
+        }
     }
 }
