@@ -8,6 +8,8 @@ public class AnimateCassete : MonoBehaviour
     float elapsedTime = 0.0f;
 
     bool didCallLoad = false;
+
+    public bool GoToNextLevel = true;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -30,7 +32,7 @@ public class AnimateCassete : MonoBehaviour
             gameObject.transform.localPosition = newPosition;
             elapsedTime += Time.deltaTime;
         }
-        else if (!didCallLoad)
+        else if (!didCallLoad && GoToNextLevel)
         {
             didCallLoad = true;
             GameManager.Instance.LoadNextLevel();
