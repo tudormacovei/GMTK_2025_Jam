@@ -122,8 +122,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roamingMovementSpeed: 1
   startledMovementSpeed: 1.5
-  WaitingTime: 0.5
-  movementPointSelectDistanceRoaming: 1.5
+  WaitingTime: 0.3
+  movementPointSelectDistanceRoaming: 1
   movementPointSelectDistanceStartled: 3
 --- !u!58 &3177205273210303666
 CircleCollider2D:

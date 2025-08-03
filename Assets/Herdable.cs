@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Herdable : MonoBehaviour
 {
+    bool isBeingDestroyed = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,7 +18,11 @@ public class Herdable : MonoBehaviour
 
     public void DestroyHerdable()
     {
-        GameManager.Instance.UnregisterHerdable();
+        if (!isBeingDestroyed)
+        {
+            isBeingDestroyed = true;
+            GameManager.Instance.UnregisterHerdable();
+        }
         Destroy(gameObject);
     }
 }

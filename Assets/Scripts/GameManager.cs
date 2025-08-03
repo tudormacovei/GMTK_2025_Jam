@@ -40,7 +40,10 @@ public class GameManager : MonoBehaviour
             return;
         }
         IsGameRunning = true;
-        gameTimer.StartTimer();
+        if (gameTimer != null)
+        {
+            gameTimer.StartTimer();
+        }
 
         // TODO: Reset score, spawn player, etc.
         Debug.Log("Game Started");
@@ -49,8 +52,12 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         IsGameRunning = false;
-        gameTimer.StopTimer();
-        gameTimer.ResetTimer();
+
+        if (gameTimer != null)
+        {
+            gameTimer.StopTimer();
+            gameTimer.ResetTimer();
+        }
 
         // TODO: Show game over UI, final time, etc.
         Debug.Log("Game Ended");
